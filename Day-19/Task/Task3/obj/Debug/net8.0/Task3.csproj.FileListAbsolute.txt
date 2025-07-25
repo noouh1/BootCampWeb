@@ -1,0 +1,14 @@
+D:\Bootcamp Sessions\19\Task\Task3\obj\Debug\net8.0\Task3.GeneratedMSBuildEditorConfig.editorconfig
+D:\Bootcamp Sessions\19\Task\Task3\obj\Debug\net8.0\Task3.AssemblyInfoInputs.cache
+D:\Bootcamp Sessions\19\Task\Task3\obj\Debug\net8.0\Task3.AssemblyInfo.cs
+D:\Bootcamp Sessions\19\Task\Task3\obj\Debug\net8.0\Task3.csproj.CoreCompileInputs.cache
+D:\Bootcamp Sessions\19\Task\Task3\bin\Debug\net8.0\Task3.exe
+D:\Bootcamp Sessions\19\Task\Task3\bin\Debug\net8.0\Task3.deps.json
+D:\Bootcamp Sessions\19\Task\Task3\bin\Debug\net8.0\Task3.runtimeconfig.json
+D:\Bootcamp Sessions\19\Task\Task3\bin\Debug\net8.0\Task3.dll
+D:\Bootcamp Sessions\19\Task\Task3\bin\Debug\net8.0\Task3.pdb
+D:\Bootcamp Sessions\19\Task\Task3\obj\Debug\net8.0\Task3.dll
+D:\Bootcamp Sessions\19\Task\Task3\obj\Debug\net8.0\refint\Task3.dll
+D:\Bootcamp Sessions\19\Task\Task3\obj\Debug\net8.0\Task3.pdb
+D:\Bootcamp Sessions\19\Task\Task3\obj\Debug\net8.0\Task3.genruntimeconfig.cache
+D:\Bootcamp Sessions\19\Task\Task3\obj\Debug\net8.0\ref\Task3.dll
