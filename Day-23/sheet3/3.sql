@@ -122,3 +122,4 @@ set grade = null
 from Stud_Course sc join Student s on sc.St_Id =s.St_Id 
 join Department d on s.Dept_Id =d.Dept_Id
 where d.Dept_name ='SD'
+select * from Stud_Course
