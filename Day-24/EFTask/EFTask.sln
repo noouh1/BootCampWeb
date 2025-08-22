@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFTask", "EFTask\EFTask.csproj", "{369B46E9-3C90-4592-A1A5-FE9FB438075B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework", "EntityFramework\EntityFramework.csproj", "{FF0B3F3F-22B5-4AC7-A29F-658CB7A40C86}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{369B46E9-3C90-4592-A1A5-FE9FB438075B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{369B46E9-3C90-4592-A1A5-FE9FB438075B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{369B46E9-3C90-4592-A1A5-FE9FB438075B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{369B46E9-3C90-4592-A1A5-FE9FB438075B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF0B3F3F-22B5-4AC7-A29F-658CB7A40C86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF0B3F3F-22B5-4AC7-A29F-658CB7A40C86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF0B3F3F-22B5-4AC7-A29F-658CB7A40C86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF0B3F3F-22B5-4AC7-A29F-658CB7A40C86}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
