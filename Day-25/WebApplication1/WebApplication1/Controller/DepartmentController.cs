@@ -27,14 +27,16 @@ public class DepartmentController(ApplicationDbContext context, IMapper mapper) 
         {
             return NotFound();
         }
-        return Ok(department);
+        var departmentDto = mapper.Map<DepartmentDto>(department);
+        return Ok(departmentDto);
     }
 
     [HttpGet]
     public async Task<IActionResult> GetDepartment(CancellationToken cancellationToken)
     {
         var departments = await context.Departments.ToListAsync(cancellationToken);
-        return Ok(departments);
+        var departmentDtos = mapper.Map<List<DepartmentDto>>(departments);
+        return Ok(departmentDtos);
     }
 
     [HttpDelete("{id:int}")]
