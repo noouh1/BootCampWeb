@@ -28,14 +28,16 @@ public class EmployeeController(ApplicationDbContext context, IMapper mapper) : 
         {
             return NotFound();
         }
-        return Ok(employee);
+        var employeeDto = mapper.Map<EmployeeDto>(employee);
+        return Ok(employeeDto);
     }
     
     [HttpGet]
     public async Task<IActionResult> GetEmployee(CancellationToken cancellationToken)
     {
         var employees = await context.Employees.ToListAsync(cancellationToken);
-        return Ok(employees);
+        var employeedtos = mapper.Map<List<EmployeeDto>>(employees);
+        return Ok(employeedtos);
     }
     
     [HttpDelete("{id:int}")]

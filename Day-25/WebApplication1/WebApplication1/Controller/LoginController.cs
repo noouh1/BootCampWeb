@@ -27,14 +27,17 @@ public class LoginController(ApplicationDbContext context, IMapper mapper) : Con
         {
             return NotFound();
         }
-        return Ok(login);
+
+        var logindto = mapper.Map<LoginDto>(login);
+        return Ok(logindto);
     }
 
     [HttpGet]
     public async Task<IActionResult> GetLogin(CancellationToken cancellationToken)
     {
         var logins = await context.Logins.ToListAsync(cancellationToken);
-        return Ok(logins);
+        var logindtos = mapper.Map<List<LoginDto>>(logins);
+        return Ok(logindtos);
     }
 
     [HttpDelete("{id:int}")]
