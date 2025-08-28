@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0ppQnocajEQ=",
+  "dgSpecHash": "gPBwdpPbYpk=",
   "success": true,
-  "projectFilePath": "D:\\Bootcamp Sessions\\27\\EFTask\\EFTask\\EFTask.csproj",
+  "projectFilePath": "D:\\BootCamp\\BootCampWeb\\Day-24\\EFTask\\EFTask\\EFTask.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\noouh\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\noouh\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",
