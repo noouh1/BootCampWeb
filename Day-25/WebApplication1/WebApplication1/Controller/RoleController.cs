@@ -27,14 +27,16 @@ public class RoleController(ApplicationDbContext context, IMapper mapper) : Cont
         {
             return NotFound();
         }
-        return Ok(role);
+        var roledto = mapper.Map<RoleDto>(role);
+        return Ok(roledto);
     }
 
     [HttpGet]
     public async Task<IActionResult> GetRole(CancellationToken cancellationToken)
     {
         var roles = await context.Roles.ToListAsync(cancellationToken);
-        return Ok(roles);
+        var roledtos = mapper.Map<List<RoleDto>>(roles);
+        return Ok(roledtos);
     }
 
     [HttpDelete("{id:int}")]

@@ -8,7 +8,7 @@ public class LoginProfile : Profile
 {
     public LoginProfile()
     {
-        CreateMap<LoginDto, Login>();
+        CreateMap<LoginDto, Login>().ReverseMap();
     }
     
 }
