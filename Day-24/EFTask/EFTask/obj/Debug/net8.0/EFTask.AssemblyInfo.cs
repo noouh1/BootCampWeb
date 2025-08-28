@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EFTask")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+edf3c1094073bfbd38e5704995c608c02b2000af")]
 [assembly: System.Reflection.AssemblyProductAttribute("EFTask")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EFTask")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
