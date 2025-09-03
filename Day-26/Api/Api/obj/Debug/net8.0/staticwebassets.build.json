@@ -1,0 +1,19 @@
+{
+  "Version": 1,
+  "Hash": "fL9woLDEurDXd/UKZPhQgx2gw+iIvgThNxnKtG/joDc=",
+  "Source": "Api",
+  "BasePath": "_content/Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Api\\wwwroot",
+      "Source": "Api",
+      "ContentRoot": "D:\\Bootcamp Sessions\\31\\Api\\Api\\wwwroot\\",
+      "BasePath": "_content/Api",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": []
+}
