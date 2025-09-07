@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Bootcamp Sessions\\32\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {}
+    "D:\\BootCamp\\BootCampWeb\\Day-27\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {}
   },
   "projects": {
-    "D:\\Bootcamp Sessions\\32\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {
+    "D:\\BootCamp\\BootCampWeb\\Day-27\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Bootcamp Sessions\\32\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+        "projectUniqueName": "D:\\BootCamp\\BootCampWeb\\Day-27\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
         "projectName": "WebApplication1",
-        "projectPath": "D:\\Bootcamp Sessions\\32\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+        "projectPath": "D:\\BootCamp\\BootCampWeb\\Day-27\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
         "packagesPath": "C:\\Users\\noouh\\.nuget\\packages\\",
-        "outputPath": "D:\\Bootcamp Sessions\\32\\WebApplication1\\WebApplication1\\obj\\",
+        "outputPath": "D:\\BootCamp\\BootCampWeb\\Day-27\\WebApplication1\\WebApplication1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noouh\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -47,6 +47,14 @@
               "target": "Package",
               "version": "[15.0.1, )"
             },
+            "Handlebars.Net": {
+              "target": "Package",
+              "version": "[2.1.6, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.13.0, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -78,6 +86,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.0, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.13.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

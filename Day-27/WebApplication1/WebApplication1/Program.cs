@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using EmailServiceApp.Services;
 using WebApplication1.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using WebApplication1.Data;
 using WebApplication1.Middlewares;
 using WebApplication1.Models;
+using WebApplication1.Models.Emails;
 using WebApplication1.Services.Implementations;
 using WebApplication1.Services.Interfaces;
 
@@ -52,6 +54,34 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 
 builder.Services.AddControllers();
+
+var configuration = builder.Configuration;
+var mailSetting = configuration.GetSection("Mail").Get<MailSetting>();
+if (mailSetting == null)
+{
+    throw new InvalidOperationException("Mail configuration section is missing or invalid.");
+}
+builder.Services.AddSingleton(mailSetting);
+var serverSetting = configuration.GetSection("Server").Get<ServerSetting>();
+if (serverSetting == null)
+{
+    throw new InvalidOperationException("Server configuration section is missing or invalid.");
+}
+builder.Services.AddSingleton(serverSetting);
+
+var dataProtectionTokenProviderSetting = configuration.GetSection("DataProtectionTokenProvider").Get<DataProtectionTokenProviderSetting>();
+if (dataProtectionTokenProviderSetting == null)
+{
+    throw new InvalidOperationException("DataProtectionTokenProvider configuration section is missing or invalid.");
+}
+builder.Services.AddSingleton(dataProtectionTokenProviderSetting);
+
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddSingleton<IOtpStorage, OtpStorage>();
+builder.Services.AddScoped<IPasswordResetService, PasswordResetService>();
+builder.Services.AddScoped<IEmailConfirmationService, EmailConfirmationService>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
