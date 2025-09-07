@@ -119,7 +119,7 @@ public class PasswordResetService : IPasswordResetService
             _db.Users.Update(user);
             await _db.SaveChangesAsync();
 
-            _sessions.Remove(sessionId); // invalidate session
+            _sessions.Remove(sessionId); 
 
             return new Response<object>
             {
