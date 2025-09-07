@@ -1,11 +1,58 @@
 {
   "Version": 1,
-  "Hash": "ozPU8KMwOlbQHpcE5qZTZ7CirEa+BWCC4ogaz+QJEsE=",
+  "Hash": "w6RHz/36cvSnGbdWZgtYBN2DEtPOoGuvImdija8LMys=",
   "Source": "WebApplication1",
   "BasePath": "_content/WebApplication1",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "WebApplication1\\wwwroot",
+      "Source": "WebApplication1",
+      "ContentRoot": "D:\\BootCamp\\BootCampWeb\\Day-27\\WebApplication1\\WebApplication1\\wwwroot\\",
+      "BasePath": "_content/WebApplication1",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\BootCamp\\BootCampWeb\\Day-27\\WebApplication1\\WebApplication1\\wwwroot\\HtmlTemplates\\ConfirmEmail.html",
+      "SourceId": "WebApplication1",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\BootCamp\\BootCampWeb\\Day-27\\WebApplication1\\WebApplication1\\wwwroot\\",
+      "BasePath": "_content/WebApplication1",
+      "RelativePath": "HtmlTemplates/ConfirmEmail.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HtmlTemplates\\ConfirmEmail.html"
+    },
+    {
+      "Identity": "D:\\BootCamp\\BootCampWeb\\Day-27\\WebApplication1\\WebApplication1\\wwwroot\\HtmlTemplates\\ResetPassword.html",
+      "SourceId": "WebApplication1",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\BootCamp\\BootCampWeb\\Day-27\\WebApplication1\\WebApplication1\\wwwroot\\",
+      "BasePath": "_content/WebApplication1",
+      "RelativePath": "HtmlTemplates/ResetPassword.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HtmlTemplates\\ResetPassword.html"
+    }
+  ]
 }
