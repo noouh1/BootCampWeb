@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Bootcamp Sessions\\31\\Api\\Api\\Api.csproj": {}
+    "D:\\BootCamp\\BootCampWeb\\Day-26\\Api\\Api\\Api.csproj": {}
   },
   "projects": {
-    "D:\\Bootcamp Sessions\\31\\Api\\Api\\Api.csproj": {
+    "D:\\BootCamp\\BootCampWeb\\Day-26\\Api\\Api\\Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Bootcamp Sessions\\31\\Api\\Api\\Api.csproj",
+        "projectUniqueName": "D:\\BootCamp\\BootCampWeb\\Day-26\\Api\\Api\\Api.csproj",
         "projectName": "Api",
-        "projectPath": "D:\\Bootcamp Sessions\\31\\Api\\Api\\Api.csproj",
+        "projectPath": "D:\\BootCamp\\BootCampWeb\\Day-26\\Api\\Api\\Api.csproj",
         "packagesPath": "C:\\Users\\noouh\\.nuget\\packages\\",
-        "outputPath": "D:\\Bootcamp Sessions\\31\\Api\\Api\\obj\\",
+        "outputPath": "D:\\BootCamp\\BootCampWeb\\Day-26\\Api\\Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noouh\\AppData\\Roaming\\NuGet\\NuGet.Config"

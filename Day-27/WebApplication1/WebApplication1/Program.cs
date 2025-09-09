@@ -78,7 +78,6 @@ builder.Services.AddSingleton(dataProtectionTokenProviderSetting);
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IFileService, FileService>();
-builder.Services.AddSingleton<IOtpStorage, OtpStorage>();
 builder.Services.AddScoped<IPasswordResetService, PasswordResetService>();
 builder.Services.AddScoped<IEmailConfirmationService, EmailConfirmationService>();
 

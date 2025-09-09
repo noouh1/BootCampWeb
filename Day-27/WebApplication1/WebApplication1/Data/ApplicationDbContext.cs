@@ -14,5 +14,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<ApprovedProduct> ApprovedProducts { get; set; }
     public DbSet<Cart> Carts { get; set; }
     
+    public DbSet<EmailConfirmation> EmailConfirmations { get; set; }
+    public DbSet<PasswordResetSession> PasswordResetSessions { get; set; }
 
 }

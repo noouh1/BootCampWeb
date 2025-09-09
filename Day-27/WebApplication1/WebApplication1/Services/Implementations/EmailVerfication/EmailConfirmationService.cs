@@ -1,8 +1,10 @@
 ﻿using System.Net;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Models;
 using WebApplication1.Models.Emails;
+using WebApplication1.Dto;
 using WebApplication1.Services.Interfaces;
 
 namespace WebApplication1.Services.Implementations;
@@ -10,31 +12,35 @@ namespace WebApplication1.Services.Implementations;
 public class EmailConfirmationService : IEmailConfirmationService
 {
     private readonly IEmailService _emailService;
-    private readonly IOtpStorage _otpStorage;
-    public EmailConfirmationService(IEmailService emailService, IOtpStorage otpStorage)
+    private readonly ApplicationDbContext _context;
+    public EmailConfirmationService(IEmailService emailService, ApplicationDbContext context) 
     {
         _emailService = emailService;
-        _otpStorage = otpStorage;
+        _context = context;
     }
 
-    public EmailConfirmationService(IEmailService emailService)
-    {
-        _emailService = emailService;
-    }
+
 
     public async Task<Response<object>> SendConfirmationEmail(string email)
     {
-        var otp = GenerateOtp();
-        _otpStorage.Save(email, otp);
+        var otpentry = GenerateOtp();
+        var data = new EmailConfirmation()
+        {
+            Email = email,
+            Otp = otpentry,
+            CreatedAt = DateTime.UtcNow,
+            ExpiredAt = DateTime.UtcNow.AddMinutes(5)
+        };
+        await _context.AddAsync(data);
+        await _context.SaveChangesAsync();
 
         var emailModel = new ConfirmEmailModel(
             ToName: "User",
             ToMail: email,
-            Code: otp,
+            Code: otpentry,
             Token: string.Empty,
             ExpiredInMinutes: 5
         );
-
         await _emailService.SendEmailAsync(emailModel, EmailSubject.ConfirmEmail, HtmlTemplate.ConfirmEmail);
 
         return new Response<object>
@@ -44,24 +50,37 @@ public class EmailConfirmationService : IEmailConfirmationService
         };
     }
 
-    public Task<Response<object>> VerifyOtp(string email, string otp)
-    {
-        if (_otpStorage.TryGet(email, out var storedOtp) && storedOtp == otp)
-        {
-            _otpStorage.Remove(email); 
+    public async Task<Response<object>> VerifyOtp(string email, string otp)
+    {   
+        var record = await _context.EmailConfirmations
+            .FirstOrDefaultAsync(e => e.Email == email && e.Otp == otp);
 
-            return Task.FromResult(new Response<object>
+        if (record == null)
+        {
+            return new Response<object>
             {
-                Message = "OTP verified successfully",
-                StatusCode = HttpStatusCode.OK
-            });
+                Message = "Invalid or expired OTP",
+                StatusCode = HttpStatusCode.BadRequest
+            };
         }
 
-        return Task.FromResult(new Response<object>
+        if (DateTime.UtcNow > record.ExpiredAt)
         {
-            Message = "Invalid or expired OTP",
-            StatusCode = HttpStatusCode.BadRequest
-        });
+            return new Response<object>
+            {
+                Message = "OTP has expired",
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
+        _context.EmailConfirmations.Remove(record);
+        await _context.SaveChangesAsync();
+        
+        return new Response<object>
+        {
+            Message = "Email verified successfully",
+            StatusCode = HttpStatusCode.OK
+        };
+
     }
 
     private static string GenerateOtp()
