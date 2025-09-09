@@ -7,5 +7,5 @@ public interface IPasswordResetService
 {
     Task<Response<object>> ForgetPassword(string email);
     Task<Response<PasswordResetSession>> VerifyOtp(string email, string otp);
-    Task<Response<object>> ChangePassword(string sessionId, string newPassword);
+    Task<Response<object>> ChangePassword(Guid sessionId, string newPassword);
 }
