@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Crypto.Generators;
 using WebApplication1.Data;
 using WebApplication1.Models;
 using WebApplication1.Models.Emails;
@@ -9,22 +10,19 @@ namespace WebApplication1.Services.Implementations;
 
 public class PasswordResetService : IPasswordResetService
     {
-        private readonly ApplicationDbContext _db;
+        private readonly ApplicationDbContext _context;
         private readonly IEmailService _emailService;
-        private readonly IOtpStorage _otpStorage;
 
-        private static readonly Dictionary<string, PasswordResetSession> _sessions = new();
 
-        public PasswordResetService(ApplicationDbContext db, IEmailService emailService, IOtpStorage otpStorage)
+        public PasswordResetService(ApplicationDbContext context, IEmailService emailService)
         {
-            _db = db;
+            _context = context;
             _emailService = emailService;
-            _otpStorage = otpStorage;
         }
 
         public async Task<Response<object>> ForgetPassword(string email)
         {
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (user == null)
             {
                 return new Response<object>
@@ -35,7 +33,15 @@ public class PasswordResetService : IPasswordResetService
             }
 
             var otp = GenerateOtp();
-            _otpStorage.Save(email, otp);
+            var data = new EmailConfirmation()
+            {
+                Email = email,
+                Otp = otp,
+                CreatedAt = DateTime.UtcNow,
+                ExpiredAt = DateTime.UtcNow.AddMinutes(5)
+            };
+            await _context.AddAsync(data);
+            await _context.SaveChangesAsync();
 
             var emailModel = new ConfirmEmailModel(
                 ToName: user.UserName ?? "User",
@@ -54,47 +60,68 @@ public class PasswordResetService : IPasswordResetService
             };
         }
 
-        public Task<Response<PasswordResetSession>> VerifyOtp(string email, string otp)
+        public async Task<Response<PasswordResetSession>> VerifyOtp(string email, string otp)
         {
-            if (_otpStorage.TryGet(email, out var storedOtp) && storedOtp == otp)
+
+            var record = await _context.EmailConfirmations
+                .FirstOrDefaultAsync(e => e.Email == email && e.Otp == otp);
+
+            if (record == null)
             {
-                _otpStorage.Remove(email);
-
-                var user = _db.Users.FirstOrDefault(u => u.Email == email);
-                if (user == null)
+                return new Response<PasswordResetSession>
                 {
-                    return Task.FromResult(new Response<PasswordResetSession>
-                    {
-                        Message = "User not found",
-                        StatusCode = HttpStatusCode.NotFound
-                    });
-                }
-
-                var session = new PasswordResetSession
-                {
-                    UserId = user.Id,
-                    Expiration = DateTime.UtcNow.AddMinutes(5)
+                    Message = "Invalid or expired OTP",
+                    StatusCode = HttpStatusCode.BadRequest
                 };
-                _sessions[session.SessionId] = session;
-
-                return Task.FromResult(new Response<PasswordResetSession>
-                {
-                    Data = session,
-                    Message = "OTP verified. Use session to reset password.",
-                    StatusCode = HttpStatusCode.OK
-                });
             }
 
-            return Task.FromResult(new Response<PasswordResetSession>
+            if (DateTime.UtcNow > record.ExpiredAt)
             {
-                Message = "Invalid or expired OTP",
-                StatusCode = HttpStatusCode.BadRequest
-            });
+                return new Response<PasswordResetSession>
+                {
+                    Message = "OTP has expired",
+                    StatusCode = HttpStatusCode.BadRequest
+                };
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+            {
+                return new Response<PasswordResetSession>
+                {
+                    Message = "User not found",
+                    StatusCode = HttpStatusCode.BadRequest
+                };
+            }
+
+            var session = new PasswordResetSession
+            {
+                UserId = user.Id,
+                Expiration = DateTime.UtcNow.AddMinutes(15) 
+            };
+
+            _context.PasswordResetSessions.Add(session);
+
+            _context.EmailConfirmations.Remove(record);
+
+            await _context.SaveChangesAsync();
+
+            return new Response<PasswordResetSession>
+            {
+                Message = "OTP verified, session created",
+                StatusCode = HttpStatusCode.OK,
+                Data = session
+            };
         }
 
-        public async Task<Response<object>> ChangePassword(string sessionId, string newPassword)
+
+
+        public async Task<Response<object>> ChangePassword(Guid sessionId, string newPassword)
         {
-            if (!_sessions.TryGetValue(sessionId, out var session) || session.Expiration < DateTime.UtcNow)
+            var session = await _context.PasswordResetSessions
+                .FirstOrDefaultAsync(s => s.SessionId == sessionId);
+
+            if (session == null || DateTime.UtcNow > session.Expiration)
             {
                 return new Response<object>
                 {
@@ -103,27 +130,26 @@ public class PasswordResetService : IPasswordResetService
                 };
             }
 
-            var user = await _db.Users.FindAsync(session.UserId);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == session.UserId);
             if (user == null)
             {
                 return new Response<object>
                 {
                     Message = "User not found",
-                    StatusCode = HttpStatusCode.NotFound
+                    StatusCode = HttpStatusCode.BadRequest
                 };
             }
 
             var passwordHasher = new Microsoft.AspNetCore.Identity.PasswordHasher<ApplicationUser>();
             user.PasswordHash = passwordHasher.HashPassword(user, newPassword);
+            
+            _context.PasswordResetSessions.Remove(session);
 
-            _db.Users.Update(user);
-            await _db.SaveChangesAsync();
-
-            _sessions.Remove(sessionId); 
+            await _context.SaveChangesAsync();
 
             return new Response<object>
             {
-                Message = "Password changed successfully",
+                Message = "Password updated successfully",
                 StatusCode = HttpStatusCode.OK
             };
         }
