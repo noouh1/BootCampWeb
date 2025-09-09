@@ -1,6 +1,8 @@
 ﻿using System.Net;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Controllers.Base;
+using WebApplication1.Data;
 using WebApplication1.Dto;
 using WebApplication1.Models;
 using WebApplication1.Models.Emails;
@@ -10,17 +12,11 @@ using WebApplication1.Services.Interfaces;
 namespace WebApplication1.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-public class EmailsControllers : BaseController
+public class EmailsControllers(IEmailConfirmationService _emailConfirmationService,ApplicationDbContext _context,IMapper _mapper) : BaseController
 {
-    private readonly IEmailConfirmationService _emailConfirmationService;
-
-    public EmailsControllers(IEmailConfirmationService emailConfirmationService)
-    {
-        _emailConfirmationService = emailConfirmationService;
-    }
-    
+ 
     [HttpPost("send-confirmation")]
-    public async Task<IActionResult> SendConfirmation([FromBody] string email)
+    public async Task<IActionResult> SendConfirmation([FromQuery] string email)
     {
         if (!ModelState.IsValid)
         {
@@ -30,8 +26,9 @@ public class EmailsControllers : BaseController
                 StatusCode = HttpStatusCode.BadRequest
             });
         }
+
         var result = await _emailConfirmationService.SendConfirmationEmail(email);
-        return StatusCode((int)result.StatusCode, result);
+        return Result(result);
     }
 
     [HttpPost("verify-otp")]
