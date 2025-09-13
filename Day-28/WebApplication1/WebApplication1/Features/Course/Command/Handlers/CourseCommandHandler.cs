@@ -8,7 +8,7 @@ using WebApplication1.Repositories.Interfaces;
 
 namespace WebApplication1.Features.Course.Command.Handlers;
 
-public class CourseCommandHandler(ICourseRepository _courseRepository,IMapper _mapper) :
+public class CourseCommandHandler(IGenericRepository<CourseEntity> _courseRepository,IMapper _mapper) :
     IRequestHandler<CourseDto, Response>,
     IRequestHandler<UpdateCourseDto, Response>,
     IRequestHandler<DeleteCourseDto, Response>
