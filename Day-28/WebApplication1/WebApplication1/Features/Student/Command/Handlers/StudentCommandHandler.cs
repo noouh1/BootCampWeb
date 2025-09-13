@@ -8,21 +8,21 @@ using WebApplication1.Repositories.Interfaces;
 
 namespace WebApplication1.Features.Student.Command.Handlers;
 
-public class StudentCommandHandler(IStudentRepository _studentRepository,IMapper _mapper) :
+public class StudentCommandHandler(IGenericRepository<StudentEntity> _studentRepository,IMapper _mapper) :
     IRequestHandler<StudentDto, Response>,
     IRequestHandler<UpdateStudentDto, Response>,
     IRequestHandler<DeleteStudentDto, Response>
 {
     public async Task<Response> Handle(StudentDto request, CancellationToken cancellationToken)
     {
-        var student = _mapper.Map<StudentEntity>(request);
+        var stu = _mapper.Map<StudentEntity>(request);
 
-        await _studentRepository.Create(student);
+        await _studentRepository.Create(stu);
 
         return new Response
         {
             StatusCode = HttpStatusCode.OK,
-            Data = student,
+            Data = stu,
             Message = "Student created successfully",
             Status = true
         };
