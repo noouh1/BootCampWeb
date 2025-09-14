@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Repositories.Interfaces;
+using WebApplication1.Specifcations.Base;
 
 namespace WebApplication1.Repositories.Implementations;
 
@@ -39,4 +40,12 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         _context.Set<TEntity>().Update(entity);
         await _context.SaveChangesAsync();
     }
+
+    public IQueryable<TEntity> GetTableAsNoTrackingWithSpec(ISpecification<TEntity> specification)
+    {
+        var start = _context.Set<TEntity>().AsNoTracking().AsQueryable();
+        var dataqurable = SpecificationEvaluator<TEntity>.GetQueryWithSpec(start, specification);
+        return dataqurable;
+    }
+
 }
