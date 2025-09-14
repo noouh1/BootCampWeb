@@ -1,19 +1,23 @@
 ﻿using System.Net;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using WebApplication1.Features.Student.Query.Models;
 using WebApplication1.Global;
+using WebApplication1.Models;
 using WebApplication1.Repositories.Interfaces;
+using WebApplication1.Specifcations;
 
 namespace WebApplication1.Features.Course.Query.Handlers;
 
-public class CourseQueryHandler(ICourseRepository _courseRepository,IMapper _mapper) :
+public class CourseQueryHandler(IGenericRepository<CourseEntity> _courseRepository,IMapper _mapper) :
     IRequestHandler<GetAllCourseDto, Response>,
     IRequestHandler<GetCourseByIdDto, Response>
 {
     public async Task<Response> Handle(GetAllCourseDto request, CancellationToken cancellationToken)
     {
-        var Courses = await _courseRepository.GetAll();
+        var Courses = await _courseRepository.GetTableAsNoTrackingWithSpec(new CourseSpecifacation(request))
+            .ToListAsync(cancellationToken);
         return new Response
         {
             StatusCode = HttpStatusCode.OK,
